@@ -1,17 +1,23 @@
 package com.example.moviebay.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "userId")
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
     private String username;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_movies",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -22,7 +28,8 @@ public class User {
     public User() {
     }
 
-    public User(String username) {
+    public User(Long userId, String username) {
+        this.userId = userId;
         this.username = username;
     }
 
@@ -53,4 +60,6 @@ public class User {
     public void addMovie(Movie movie) {
         userMovies.add(movie);
     }
+
+    public void removeMovie(Movie movie) { userMovies.remove(movie); }
 }

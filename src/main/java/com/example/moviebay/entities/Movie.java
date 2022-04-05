@@ -1,27 +1,39 @@
 package com.example.moviebay.entities;
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "movieId")
+
 @Entity
-@Table(name = "Movies")
+@Table(name = "movies")
 public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long movieId;
-    private int tmdbId;
+    @JsonProperty("movie_id")
+    private Integer tmdbId;
     private String title;
+    @JsonProperty("overview")
     private String description;
+    @JsonProperty("release_date")
     private String releaseDate;
-    @ManyToMany(mappedBy = "userMovies")
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "userMovies", fetch = FetchType.LAZY)
     private List<User> users = new ArrayList<>();
 
     public Movie() {
     }
 
-    public Movie(int tmdbId, String title, String description, String releaseDate) {
+    public Movie(Long movieId, Integer tmdbId, String title, String description, String releaseDate) {
+        this.movieId = movieId;
         this.tmdbId = tmdbId;
         this.title = title;
         this.description = description;
@@ -74,9 +86,5 @@ public class Movie {
 
     public void setUsers(List<User> users) {
         this.users = users;
-    }
-
-    public void addUser(User user) {
-        users.add(user);
     }
 }
