@@ -17,6 +17,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
     private String username;
+    private String email;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_movies",
@@ -28,9 +29,25 @@ public class User {
     public User() {
     }
 
-    public User(Long userId, String username) {
+    public User(String username, String email) {
+
+        this.username = username;
+        this.email = email;
+    }
+
+    public User(Long userId, String username, String email) {
+
         this.userId = userId;
         this.username = username;
+        this.email = email;
+    }
+
+    public User(Long userId, String username, String email, List<Movie> userMovies) {
+
+        this.userId = userId;
+        this.username = username;
+        this.email = email;
+        this.userMovies = userMovies;
     }
 
     public Long getUserId() {
@@ -55,6 +72,14 @@ public class User {
 
     public void setUserMovies(List<Movie> userMovies) {
         this.userMovies = userMovies;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void addMovie(Movie movie) {

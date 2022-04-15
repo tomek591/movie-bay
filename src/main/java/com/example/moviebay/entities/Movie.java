@@ -32,8 +32,8 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(Long movieId, Integer tmdbId, String title, String description, String releaseDate) {
-        this.movieId = movieId;
+    public Movie(Integer tmdbId, String title, String description, String releaseDate) {
+
         this.tmdbId = tmdbId;
         this.title = title;
         this.description = description;
