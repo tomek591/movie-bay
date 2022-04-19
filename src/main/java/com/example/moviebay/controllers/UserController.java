@@ -25,11 +25,11 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/add-movie/{movieId}")
-    public void addMovieFromAPI(@PathVariable Long userId,@PathVariable Long movieId){
+    public void addMovieFromTmdbAPI(@PathVariable Long userId,@PathVariable Long movieId){
 
         Movie movie = webClientBuilder.build()
                 .get()
-                .uri("https://api.themoviedb.org/3/movie/" + movieId + "?yourkey")
+                .uri("https://api.themoviedb.org/3/movie/" + movieId + "?api_key=yourapikey")
                 .retrieve()
                 .bodyToMono(Movie.class)
                 .block();

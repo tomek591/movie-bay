@@ -17,7 +17,6 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long movieId;
-    @JsonProperty("movie_id")
     private Integer tmdbId;
     private String title;
     @JsonProperty("overview")
